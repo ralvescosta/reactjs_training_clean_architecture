@@ -8,13 +8,13 @@
     "start": "node index",
     "dev": "webpack-dev-server --open --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
-    "test": "cross-env NODE_ICU_DATA=node_modules/full-icu jest --passWithNoTests --no-cache --runInBand",
-    "test:watch": "npm test -- --watch",
-    "test:staged": "npm test -- --findRelatedTests",
-    "test:ci": "npm test -- --coverage",
-    "test:coveralls": "npm run test:ci && coveralls < coverage/lcov.info",
+    "test": "jest --passWithNoTests",
+    "test:watch": "yarn test -- --watch",
+    "test:staged": "yarn test -- --findRelatedTests",
+    "test:ci": "yarn test -- --coverage",
+    "test:coveralls": "yarn run test:ci && coveralls < coverage/lcov.info",
     "test:cypress": "cypress open",
-    "check": "npm-check -u -s"
+    "check": "yarn-check -u -s"
   },
   "devDependencies": {
     "@types/jest": "^25.2.3",
@@ -30,7 +30,7 @@
     "husk": "^0.5.3",
     "jest": "25.5.4",
     "lint-staged": "^10.2.9",
-    "ts-jest": "^26.1.0",
+    "ts-jest": "25.5.4",
     "typescript": "^3.9.5"
   }
 }
