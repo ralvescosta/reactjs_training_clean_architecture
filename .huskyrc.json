@@ -1,6 +1,6 @@
 {
   "hooks": {
-    "pre-commit": "yarn jest",
-    "pre-push": "yarn jest"
+    "pre-commit": "npm jest",
+    "pre-push": "npm jest"
   }
 }
