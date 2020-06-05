@@ -28,9 +28,9 @@
     "eslint-plugin-standard": "^4.0.1",
     "git-commit-msg-linter": "^2.4.2",
     "husk": "^0.5.3",
-    "jest": "25.5.4",
+    "jest": "^25.5.4",
     "lint-staged": "^10.2.9",
-    "ts-jest": "25.5.4",
+    "ts-jest": "^25.5.1",
     "typescript": "^3.9.5"
   }
 }
