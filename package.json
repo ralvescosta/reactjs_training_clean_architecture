@@ -29,7 +29,7 @@
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-standard": "^4.0.1",
     "git-commit-msg-linter": "^2.4.2",
-    "husk": "^0.5.3",
+    "husky": "^4.2.5",
     "jest": "^25.5.4",
     "lint-staged": "^10.2.9",
     "ts-jest": "^25.5.1",

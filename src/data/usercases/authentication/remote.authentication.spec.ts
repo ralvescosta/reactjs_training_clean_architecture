@@ -20,6 +20,6 @@ describe('RemoteAuthentication', () => {
     const url = 'batata'
     const { sut, httpPostClientSpy } = makeSut(url)
     await sut.auth()
-    expect(httpPostClientSpy.url).toEqual('url')
+    expect(httpPostClientSpy.url).toEqual(url)
   })
 })
