@@ -37,11 +37,5 @@
   },
   "dependencies": {
     "react": "^16.13.1"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn jest",
-      "pre-push": "yarn jest"
-    }
   }
 }
