@@ -16,7 +16,7 @@ const makeSut = (url: string = 'some_url'): SutTypes => {
 }
 
 describe('RemoteAuthentication', () => {
-  test('Should  calls HttpPostClint with current URL', async () => {
+  test('Should call HttpPostClint with current URL', async () => {
     const url = 'batata'
     const { sut, httpPostClientSpy } = makeSut(url)
     await sut.auth()
