@@ -1,14 +1,25 @@
 import { RemoteAuthentication } from './remote.authentication'
-import { HttpClientFake }  from '../../fakes/mock.http.client'
+import { HttpPostClientFake }  from '../../fakes/mock.http.client'
 
-describe('RemoteAuthentication', () => {
+type SutTypes = {
+  sut: RemoteAuthentication,
+  httpPostClientSpy: HttpPostClientFake
+}
+
+const makeSut = (url: string = 'some_url'): SutTypes  => {
+  const httpPostClientSpy = new HttpPostClientFake();
+  const sut = new RemoteAuthentication(url, httpPostClientSpy);
+  return {
+    sut,
+    httpPostClientSpy
+  }
+}
+
+describe('RemoteAuthentication', () => { 
   test('Should call HttpPostClint with current URL', async ()=> {
-
-    const url = 'some_url'
-    const httpPostClientSpy = new HttpClientFake()
-    const sut = new RemoteAuthentication(url, httpPostClientSpy);
+    const url = 'batata'
+    const {sut, httpPostClientSpy} = makeSut(url)
     await sut.auth()
-    
     expect(httpPostClientSpy.url).toEqual(url)
   })
 })
