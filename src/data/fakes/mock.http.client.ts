@@ -1,5 +1,4 @@
-import { HttpPostClient, HttpPostParams } from '~/data/protocols/http/http.post.client'
-import { HttpResponse, HttpStatusCode } from '~/data/protocols/http/http.response'
+import { HttpPostClient, HttpPostParams, HttpResponse, HttpStatusCode } from '~/data/protocols/http/http.post.client'
 
 export class MockHttpPostClient<DTO, Res> implements HttpPostClient<DTO, Res> {
   public url?: string;
