@@ -1,6 +1,6 @@
-import { HttpPostClient, HttpPostParams } from '../protocols/http/http.post.client'
+import { HttpPostClient, HttpPostParams } from '~/data/protocols/http/http.post.client'
 
-export class HttpPostClientFake implements HttpPostClient {
+export class MockHttpPostClient implements HttpPostClient {
   public url?: string;
   public body?: object
 
