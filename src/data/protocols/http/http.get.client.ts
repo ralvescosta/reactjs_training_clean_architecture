@@ -8,17 +8,16 @@ export enum HttpStatusCode {
   internalServerError = 500,
 }
 
-export type HttpPostResponse<BodyT> = {
+export type HttpGetResponse<BodyT> = {
   statusCode: HttpStatusCode
   body?: BodyT
 }
 
-export type HttpPostParams<BodyT = any, HeadersT = any> = {
+export type HttpGetParams<HeadersT = any> = {
   url: string
-  body?: BodyT
   headers?: HeadersT
 }
 
-export interface HttpPostClient<DTO, Res> {
-  post(params: HttpPostParams<DTO>): Promise<HttpPostResponse<Res>>
+export interface HttpGetClient<Res> {
+  get(params: HttpGetParams): Promise<HttpGetResponse<Res>>
 }
