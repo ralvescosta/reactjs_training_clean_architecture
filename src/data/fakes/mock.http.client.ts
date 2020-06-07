@@ -5,7 +5,7 @@ export class MockHttpPostClient implements HttpPostClient {
   public url?: string;
   public body?: object
   public response: HttpResponse = {
-    statusCode: HttpStatusCode.noContent
+    statusCode: HttpStatusCode.success
   }
 
   async post (params: HttpPostParams): Promise<HttpResponse> {
