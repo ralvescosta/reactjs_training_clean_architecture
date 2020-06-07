@@ -1,3 +1,9 @@
+export type HttpPostParams<BodyT = any, HeadersT = any> = {
+  url: string
+  body?: BodyT
+  headers?: HeadersT
+}
+
 export interface HttpPostClient {
-  post<T = any>(url: string): Promise<T>
+  post<ResponseT = any>(params: HttpPostParams): Promise<ResponseT>
 }

@@ -1,10 +1,10 @@
-import { HttpPostClient } from '../protocols/http/http.post.client'
+import { HttpPostClient, HttpPostParams } from '../protocols/http/http.post.client'
 
 export class HttpPostClientFake implements HttpPostClient {
   public url?: string;
 
-  async post (url: string): Promise<any> {
-    this.url = url
+  async post (params: HttpPostParams): Promise<any> {
+    this.url = params.url
     return Promise.resolve()
   }
 }
