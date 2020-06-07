@@ -1,3 +1,5 @@
+import { HttpResponse } from './http.response'
+
 export type HttpPostParams<BodyT = any, HeadersT = any> = {
   url: string
   body?: BodyT
@@ -5,5 +7,5 @@ export type HttpPostParams<BodyT = any, HeadersT = any> = {
 }
 
 export interface HttpPostClient {
-  post<ResponseT = any>(params: HttpPostParams): Promise<ResponseT>
+  post<ResponseT = any>(params: HttpPostParams): Promise<HttpResponse<ResponseT>>
 }
