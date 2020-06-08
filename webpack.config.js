@@ -10,13 +10,13 @@ module.exports = {
     filename: 'bundle.js'
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', 'scss'],
+    extensions: ['.ts', '.tsx', '.js', 'scss', '.svg'],
     alias: {
       '~': path.join(__dirname, 'src')
     }
   },
   module: {
-    roles: [
+    rules: [
       {
         test: /\.ts(x?)$/,
         loader: 'ts-loader',
@@ -48,8 +48,7 @@ module.exports = {
   },
   externals: {
     react: 'React',
-    'react-dom:': 'ReactDOM',
-    axios: 'axios'
+    'react-dom': 'ReactDOM'
   },
   plugins: [
     new CleanWebpackPlugin()
