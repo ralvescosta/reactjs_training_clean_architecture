@@ -6,23 +6,6 @@
   height: 100vh;
   justify-content: space-between;
 
-  .header {
-    display: flex;
-    flex-direction: column;
-    border-top: 40px solid $primaryDark;
-    background-color: $primary;
-    align-items: center;
-
-    img {
-      margin-top: 40px;
-    }
-
-    h1 {
-      color: $white;
-      margin: 16px 0px 40px;
-    }
-  }
-
   .form {
     display: flex;
     flex-direction: column;
@@ -37,6 +20,7 @@
       border: 1px solid $primaryDark;
       line-height: 40px;
       border-radius: 4px;
+      padding: 0px 40px 0 8px;
 
       &:focus {
         outline-color: $primaryLight;
@@ -65,10 +49,6 @@
         text-decoration: underline;
       }
     }
-  }
 
-  .footer {
-    height: 48px;
-    background-color: $primary;
   }
 }
