@@ -24,6 +24,14 @@ const Login: React.FC<Props> = ({ validation }: Props) => {
     messageToUser: ''
   })
 
+  function handleSubmit (e: React.FormEvent<HTMLFormElement>): void {
+    e.preventDefault()
+    setState({
+      ...state,
+      isLoading: true
+    })
+  }
+
   useEffect(() => {
     setState({
       ...state,
@@ -41,7 +49,7 @@ const Login: React.FC<Props> = ({ validation }: Props) => {
           setState
         }
       }>
-        <form className={Styles.form}>
+        <form className={Styles.form} onSubmit={handleSubmit}>
           <h2>Login</h2>
 
           <Input type="email" name="email" placeholder="Digite seu e-mail" />
