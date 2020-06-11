@@ -19,8 +19,8 @@ const Login: React.FC<Props> = ({ validation }: Props) => {
     email: '',
     password: '',
     isLoading: false,
-    emailTitle: 'Campo Obrigatorio',
-    passwordTitle: 'Campo Obrigatorio',
+    emailTitle: '',
+    passwordTitle: '',
     messageToUser: ''
   })
 
