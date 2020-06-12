@@ -2,11 +2,9 @@ import React from 'react'
 import faker from 'faker'
 import { render, RenderResult, cleanup, fireEvent } from '@testing-library/react'
 import { ValidationStub } from '~/presentation/mocks/mock.validation'
+import { AuthenticationSpy } from '~/presentation/mocks/mock.authentication'
 
 import Login from './index'
-import { Authentication, AuthenticationParams } from '~/domain/usecases/authentication'
-import { AccountModel } from '~/domain/models/account.models'
-import { mockAccountModel } from '~/domain/fakes/mock.account'
 
 type SutType = {
   sut: RenderResult
@@ -15,16 +13,6 @@ type SutType = {
 
 type SutParams = {
   validationError: string
-}
-
-class AuthenticationSpy implements Authentication {
-  public account = mockAccountModel()
-  public params: AuthenticationParams;
-
-  async auth (params: AuthenticationParams): Promise<AccountModel> {
-    this.params = params
-    return Promise.resolve(this.account)
-  }
 }
 
 function makeSut (params?: SutParams): SutType {
