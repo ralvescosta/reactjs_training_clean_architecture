@@ -10,6 +10,7 @@ import FormStatus from '~/presentation/components/formStatus'
 import Footer from '~/presentation/components/footer'
 import { Validation } from '~/presentation/protocols/validation'
 import { Authentication } from '~/domain/usecases/authentication'
+import { Link } from 'react-router-dom'
 
 type Props = {
   validation: Validation
@@ -78,7 +79,7 @@ const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
 
           <button data-testid="submit" disabled={!!state.emailTitle || !!state.passwordTitle} type="submit">Entrar</button>
 
-          <span className={Styles.link}>Criar Conta</span>
+          <Link data-testid="signup" to="/signup" className={Styles.link}>Criar Conta</Link>
 
           <FormStatus />
         </form>
