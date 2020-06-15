@@ -11,7 +11,7 @@ const FormStatus: React.FC = () => {
   return (
     <div data-testid="error-wrap" className={Styles.errorWrap}>
       {state.isLoading ? (<Spinner className={Styles.spinner} />) : null}
-      {state.messageToUser ? <span className={Styles.error}>{state.messageToUser}</span> : null}
+      {state.messageToUser ? <span data-testid="msg-to-user" className={Styles.error}>{state.messageToUser}</span> : null}
     </div>
   )
 }
