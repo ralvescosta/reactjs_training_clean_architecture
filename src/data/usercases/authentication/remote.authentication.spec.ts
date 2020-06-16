@@ -2,7 +2,7 @@ import faker from 'faker'
 import { RemoteAuthentication } from './remote.authentication'
 
 import { HttpStatusCode } from '~/data/protocols/http/http.post.client'
-import { MockHttpPostClient } from '~/data/fakes/mock.http.client'
+import { MockHttpPostClient } from '~/data/mocks/mock.http.client'
 
 import { mockAuthentication, mockAccountModel } from '~/domain/fakes/mock.account'
 import { AuthenticationParams } from '~/domain/usecases/authentication'
