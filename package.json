@@ -12,7 +12,7 @@
     "test:watch": "yarn test -- --watch",
     "test:staged": "yarn test -- --findRelatedTests src/",
     "test:ci": "yarn test -- --coverage",
-    "test:coveralls": "yarn run test:ci && coveralls < coverage/lcov.info",
+    "test:coveralls": "yarn test:ci && coveralls < coverage/lcov.info",
     "test:cypress": "cypress open",
     "check": "npx npm-check -u -s"
   },
