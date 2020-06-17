@@ -1,7 +1,7 @@
 import { HttpPostClient, HttpPostParams, HttpPostResponse, HttpStatusCode } from '~/data/protocols/http/http.post.client'
 
 export class MockHttpPostClient<DTO, Res> implements HttpPostClient<DTO, Res> {
-  public url?: string;
+  public url?: string
   public body?: DTO
   public response: HttpPostResponse<Res> = {
     statusCode: HttpStatusCode.success

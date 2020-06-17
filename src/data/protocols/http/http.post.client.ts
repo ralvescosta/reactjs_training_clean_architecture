@@ -20,5 +20,5 @@ export type HttpPostParams<BodyT = any, HeadersT = any> = {
 }
 
 export interface HttpPostClient<DTO, Res> {
-  post(params: HttpPostParams<DTO>): Promise<HttpPostResponse<Res>>
+  post: (params: HttpPostParams<DTO>) => Promise<HttpPostResponse<Res>>
 }
