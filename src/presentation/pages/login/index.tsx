@@ -11,13 +11,15 @@ import Footer from '~/presentation/components/footer'
 import { Validation } from '~/presentation/protocols/validation'
 import { Authentication } from '~/domain/usecases/authentication'
 import { Link, useHistory } from 'react-router-dom'
+import { SaveAccessToken } from '~/domain/usecases/save.access.token'
 
 type Props = {
   validation: Validation
   authentication: Authentication
+  saveAccessToken: SaveAccessToken
 }
 
-const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
+const Login: React.FC<Props> = ({ validation, authentication, saveAccessToken }: Props) => {
   const history = useHistory()
 
   const [state, setState] = useState({
@@ -45,8 +47,7 @@ const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
         email: state.email,
         password: state.password
       })
-
-      localStorage.setItem('accessToken', account.accessToken)
+      await saveAccessToken.save(account.accessToken)
       history.replace('/')
     } catch (err) {
       setState({
