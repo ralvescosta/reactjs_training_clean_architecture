@@ -2,15 +2,15 @@ import faker from 'faker'
 import { RemoteAuthentication } from './remote.authentication'
 
 import { HttpStatusCode } from '~/data/protocols/http/http.post.client'
-import { MockHttpPostClient } from '~/data/__test__/mock.http.client'
+import { MockHttpPostClient } from '~/data/__test__/mock.http'
 
 import { mockAuthentication, mockAccountModel } from '~/domain/__test__/mock.account'
 import { AuthenticationParams } from '~/domain/usecases/authentication'
 import { AccountModel } from '~/domain/models/account.models'
-import { InvalidCredentialsError } from '~/domain/erros/invalid.credentials.error'
-import { UnexpectedError } from '~/domain/erros/unexpected.error'
+import { InvalidCredentialsError } from '~/domain/errors/invalid.credentials.error'
+import { UnexpectedError } from '~/domain/errors/unexpected.error'
 
-// System under test
+// SUT = System under test
 type SutTypes = {
   sut: RemoteAuthentication
   httpPostClientSpy: MockHttpPostClient<AuthenticationParams, AccountModel>

@@ -8,7 +8,7 @@ import { render, RenderResult, cleanup, fireEvent, waitFor } from '@testing-libr
 import Login from './index'
 import { ValidationStub } from '~/presentation/__test__/mock.validation'
 import { AuthenticationSpy } from '~/presentation/__test__/mock.authentication'
-import { InvalidCredentialsError } from '~/domain/erros/invalid.credentials.error'
+import { InvalidCredentialsError } from '~/domain/errors/invalid.credentials.error'
 import { SaveAccessTokenMock } from '~/presentation/__test__/mock.save.access.token'
 
 type SutType = {
