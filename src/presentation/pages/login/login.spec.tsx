@@ -47,31 +47,13 @@ function makeSut (params?: SutParams): SutType {
   }
 }
 
-function populateEmail (
-  sut: RenderResult,
-  email = faker.internet.email()
-): void {
-  const emailInput = sut.getByTestId('email')
-
-  fireEvent.input(emailInput, { target: { value: email } })
-}
-
-function populatePassword (
-  sut: RenderResult,
-  password = faker.internet.password()
-): void {
-  const passwordInput = sut.getByTestId('password')
-
-  fireEvent.input(passwordInput, { target: { value: password } })
-}
-
 function mockValidForm (
   sut: RenderResult,
   email = faker.internet.email(),
   password = faker.internet.password()
 ): void {
-  populateEmail(sut, email)
-  populatePassword(sut, password)
+  Helper.populateField(sut, 'email', email)
+  Helper.populateField(sut, 'password', password)
 }
 
 async function mockValidFormAndSubmit (
@@ -111,7 +93,7 @@ describe('Login Component', () => {
     const validationError = faker.random.words()
     const { sut } = makeSut({ validationError })
 
-    populateEmail(sut)
+    Helper.populateField(sut, 'email', faker.internet.email())
 
     const emailStatus = sut.getByTestId('email-status')
     expect(emailStatus.title).toBe(validationError)
@@ -121,22 +103,21 @@ describe('Login Component', () => {
   it('Should show password error if validation fails', () => {
     const validationError = faker.random.words()
     const { sut } = makeSut({ validationError })
-
-    populatePassword(sut)
+    Helper.populateField(sut, 'password', faker.internet.password())
     Helper.testStatusForField(sut, 'password', validationError)
   })
 
   it('Should show valid email state if Validation success', () => {
     const { sut } = makeSut()
 
-    populateEmail(sut)
+    Helper.populateField(sut, 'email', faker.internet.email())
     Helper.testStatusForField(sut, 'email')
   })
 
   it('Should show valid password state if Validation success', () => {
     const { sut } = makeSut()
 
-    populatePassword(sut)
+    Helper.populateField(sut, 'password', faker.internet.password())
     Helper.testStatusForField(sut, 'password')
   })
 

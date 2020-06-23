@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import Context from '~/presentation/contexts/form'
 
@@ -8,13 +8,15 @@ import Header from '~/presentation/components/signHeader'
 import Input from '~/presentation/components/inputMask'
 import FormStatus from '~/presentation/components/formStatus'
 import Footer from '~/presentation/components/footer'
+import { Validation } from '~/presentation/protocols/validation'
 // import { Link } from 'react-router-dom'
 
 type Props = {
+  validation: Validation
 }
 
-const SignUp: React.FC<Props> = () => {
-  const [state] = useState({
+const SignUp: React.FC<Props> = ({ validation }: Props) => {
+  const [state, setState] = useState({
     name: '',
     email: '',
     password: '',
@@ -27,12 +29,23 @@ const SignUp: React.FC<Props> = () => {
     messageToUser: ''
   })
 
+  useEffect(() => {
+    setState({
+      ...state,
+      nameTitle: validation.validate('name', state.name),
+      emailTitle: validation.validate('email', state.name),
+      passwordTitle: validation.validate('password', state.name),
+      passwordConfirmationTitle: validation.validate('passwordConfirmation', state.name)
+    })
+  }, [state.name, state.email, state.password, state.passwordConfirmation])
+
   return (
     <div className={Styles.signUpWrap}>
       <Header />
       <Context.Provider value={
         {
-          state
+          state,
+          setState
         }
       }>
         <form data-testid="form" className={Styles.form} onSubmit={() => {}}>
