@@ -22,3 +22,8 @@ export function populateField (sut: RenderResult, fieldName: string, value = fak
 
   fireEvent.input(emailInput, { target: { value } })
 }
+
+export function testElementExist (sut: RenderResult, fieldName: string): void {
+  const element = sut.getByTestId(fieldName)
+  expect(element).toBeTruthy()
+}

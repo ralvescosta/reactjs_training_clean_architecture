@@ -1,13 +1,15 @@
 import React from 'react'
-import { RenderResult, render, cleanup } from '@testing-library/react'
+import { RenderResult, render, cleanup, fireEvent, waitFor } from '@testing-library/react'
 import faker from 'faker'
 
 import SignUp from './index'
 import * as Helper from '~/presentation/__test__/form.helper'
 import { ValidationStub } from '~/presentation/__test__/mock.validation'
+import { AddAccountSpy } from '~/presentation/__test__/mock.add.account'
 
 type SutTypes = {
   sut: RenderResult
+  addAccountSpy: AddAccountSpy
 }
 
 type SutParams = {
@@ -17,13 +19,34 @@ type SutParams = {
 function makeSut (params?: SutParams): SutTypes {
   const validationStub = new ValidationStub()
   validationStub.errorMessage = params?.validationError
+  const addAccountSpy = new AddAccountSpy()
+
   const sut = render(
     <SignUp
       validation={validationStub}
+      addAccount={addAccountSpy}
     />
   )
 
-  return { sut }
+  return {
+    sut,
+    addAccountSpy
+  }
+}
+
+async function mockValidFormAndSubmit (
+  sut: RenderResult,
+  name = faker.internet.email(),
+  email = faker.internet.email(),
+  password = faker.internet.password()
+): Promise<void> {
+  Helper.populateField(sut, 'name',name)
+  Helper.populateField(sut, 'email',email)
+  Helper.populateField(sut, 'password',password)
+  Helper.populateField(sut, 'passwordConfirmation', password)
+  const form = sut.getByTestId('form')
+  fireEvent.submit(form)
+  await waitFor(() => form) // observer to async dom render
 }
 
 describe('SignUp Component', () => {
@@ -104,5 +127,40 @@ describe('SignUp Component', () => {
 
     Helper.populateField(sut, 'passwordConfirmation')
     Helper.testStatusForField(sut, 'passwordConfirmation')
+  })
+
+  it('Should enable button if form is valid', () => {
+    const { sut } = makeSut()
+
+    Helper.populateField(sut, 'name')
+    Helper.populateField(sut, 'email')
+    Helper.populateField(sut, 'password')
+    Helper.populateField(sut, 'passwordConfirmation')
+
+    Helper.testButtonIsDisabled(sut, 'submit', false)
+  })
+
+  it('Should show spinner on submit', async () => {
+    const { sut } = makeSut()
+
+    await mockValidFormAndSubmit(sut)
+
+    Helper.testElementExist(sut, 'spinner')
+  })
+
+  it('Should call AddAccount with correct values', async () => {
+    const { sut, addAccountSpy } = makeSut()
+    const name = faker.internet.userName()
+    const email = faker.internet.email()
+    const password = faker.internet.password()
+
+    await mockValidFormAndSubmit(sut, name, email, password)
+
+    expect(addAccountSpy.params).toEqual({
+      name,
+      email,
+      password,
+      passwordConfirmation: password
+    })
   })
 })

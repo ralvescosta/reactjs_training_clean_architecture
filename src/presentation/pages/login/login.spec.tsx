@@ -67,11 +67,6 @@ async function mockValidFormAndSubmit (
   await waitFor(() => form) // observer to async dom render
 }
 
-function testElementExist (sut: RenderResult, fieldName: string): void {
-  const element = sut.getByTestId(fieldName)
-  expect(element).toBeTruthy()
-}
-
 describe('Login Component', () => {
   afterEach(cleanup)
 
@@ -133,7 +128,7 @@ describe('Login Component', () => {
 
     await mockValidFormAndSubmit(sut)
 
-    testElementExist(sut, 'spinner')
+    Helper.testElementExist(sut, 'spinner')
   })
 
   it('Should call authentication with correct values', async () => {
