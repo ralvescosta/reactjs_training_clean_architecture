@@ -172,4 +172,13 @@ describe('SignUp Component', () => {
 
     expect(addAccountSpy.callsCount).toBe(1)
   })
+
+  it('Should call AddAccount only once', async () => {
+    const validationError = faker.random.words()
+    const { sut, addAccountSpy } = makeSut({ validationError })
+
+    await mockValidFormAndSubmit(sut)
+
+    expect(addAccountSpy.callsCount).toBe(0)
+  })
 })
