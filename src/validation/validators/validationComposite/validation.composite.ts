@@ -17,7 +17,9 @@ export class ValidationComposite implements Validation {
 
     for (const validator of fieldValidators) {
       const error = validator.validate(input)
-      return error.message
+      if (error) {
+        return error.message
+      }
     }
   }
 }
