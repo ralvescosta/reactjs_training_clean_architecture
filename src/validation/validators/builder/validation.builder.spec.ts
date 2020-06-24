@@ -3,6 +3,7 @@ import { RequiredFieldValidation } from '../requiredField/requiredField.validati
 import { ValidationBuilder } from './validation.builder'
 import { EmailValidation } from '../email/email.validation'
 import { MinLengthValidation } from '../minLength/min.length.validation'
+import { CompareFieldsValidation } from '../compareFields/compare.fields.validation'
 
 describe('ValidationBuilder', () => {
   it('Should return RequiredFieldValidation', () => {
@@ -23,6 +24,13 @@ describe('ValidationBuilder', () => {
     const length = faker.random.number()
     const validations = ValidationBuilder.field(field).min(length).build()
     expect(validations).toEqual([new MinLengthValidation(field, length)])
+  })
+
+  it('Should return CompareFieldValidation', () => {
+    const field = faker.database.column()
+    const compareField = faker.database.column()
+    const validations = ValidationBuilder.field(field).sameAs(compareField).build()
+    expect(validations).toEqual([new CompareFieldsValidation(field, compareField)])
   })
 
   it('Should return a list of validations', () => {
