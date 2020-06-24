@@ -36,12 +36,6 @@
 
     button {
       margin-top: 32px;
-
-      &:disabled {
-        background-color: $disabledBackground;
-        color: $disabledColor;
-        cursor: auto;
-      }
     }
 
     .link {

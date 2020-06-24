@@ -217,4 +217,29 @@ describe('SignUp Component', () => {
     expect(history.length).toBe(1)
     expect(history.location.pathname).toBe('/')
   })
+
+  it('Should present Error with SaveAccessToken Fails', async () => {
+    const { sut, saveAccessTokenMock } = makeSut()
+    const error = new EmailAlreadyExistError()
+
+    jest.spyOn(saveAccessTokenMock, 'save')
+      .mockRejectedValueOnce(error)
+
+    await mockValidFormAndSubmit(sut)
+
+    const messageToUser = sut.getByTestId('msg-to-user')
+
+    Helper.testChildCount(sut, 'error-wrap', 1)
+    expect(messageToUser.textContent).toBe(error.message)
+  })
+
+  it('Should go to SignUp page', () => {
+    const { sut } = makeSut()
+
+    const loginLink = sut.getByTestId('login-link')
+
+    fireEvent.click(loginLink)
+    expect(history.length).toBe(1)
+    expect(history.location.pathname).toBe('/login')
+  })
 })

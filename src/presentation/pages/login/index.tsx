@@ -12,6 +12,7 @@ import { Validation } from '~/presentation/protocols/validation'
 import { Authentication } from '~/domain/usecases/authentication'
 import { Link, useHistory } from 'react-router-dom'
 import { SaveAccessToken } from '~/domain/usecases/save.access.token'
+import SubmitButton from '~/presentation/components/submitButton'
 
 type Props = {
   validation: Validation
@@ -26,6 +27,7 @@ const Login: React.FC<Props> = ({ validation, authentication, saveAccessToken }:
     email: '',
     password: '',
     isLoading: false,
+    isFormInvalid: true,
     emailTitle: '',
     passwordTitle: '',
     messageToUser: ''
@@ -35,7 +37,7 @@ const Login: React.FC<Props> = ({ validation, authentication, saveAccessToken }:
     e.preventDefault()
 
     try {
-      if (state.isLoading || state.emailTitle || state.passwordTitle) {
+      if (state.isLoading || state.isFormInvalid) {
         return
       }
 
@@ -59,10 +61,13 @@ const Login: React.FC<Props> = ({ validation, authentication, saveAccessToken }:
   }
 
   useEffect(() => {
+    const emailTitle = validation.validate('email', state.email)
+    const passwordTitle = validation.validate('password', state.password)
     setState({
       ...state,
-      emailTitle: validation.validate('email', state.email),
-      passwordTitle: validation.validate('password', state.password)
+      emailTitle,
+      passwordTitle,
+      isFormInvalid: !!emailTitle || !!passwordTitle
     })
   }, [state.email, state.password])
 
@@ -81,9 +86,9 @@ const Login: React.FC<Props> = ({ validation, authentication, saveAccessToken }:
           <Input type="email" name="email" placeholder="Digite seu e-mail" />
           <Input type="password" name="password" placeholder="Digite sua senha"/>
 
-          <button data-testid="submit" disabled={!!state.emailTitle || !!state.passwordTitle} type="submit">Entrar</button>
+          <SubmitButton text="SignIn"/>
 
-          <Link data-testid="signup" to="/signup" className={Styles.link}>Criar Conta</Link>
+          <Link data-testid="signup-link" to="/signup" className={Styles.link}>Criar Conta</Link>
 
           <FormStatus />
         </form>

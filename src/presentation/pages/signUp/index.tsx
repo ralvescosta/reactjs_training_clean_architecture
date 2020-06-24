@@ -7,7 +7,9 @@ import Styles from './styles.scss'
 import Header from '~/presentation/components/signHeader'
 import Input from '~/presentation/components/inputMask'
 import FormStatus from '~/presentation/components/formStatus'
+import SubmitButton from '~/presentation/components/submitButton'
 import Footer from '~/presentation/components/footer'
+
 import { Validation } from '~/presentation/protocols/validation'
 import { AddAccount } from '~/domain/usecases/addAccount'
 import { SaveAccessToken } from '~/domain/usecases/save.access.token'
@@ -27,6 +29,7 @@ const SignUp: React.FC<Props> = ({ validation, addAccount, saveAccessToken }: Pr
     password: '',
     passwordConfirmation: '',
     isLoading: false,
+    isFormInvalid: true,
     nameTitle: '',
     emailTitle: '',
     passwordTitle: '',
@@ -35,12 +38,18 @@ const SignUp: React.FC<Props> = ({ validation, addAccount, saveAccessToken }: Pr
   })
 
   useEffect(() => {
+    const nameTitle = validation.validate('name', state.name)
+    const emailTitle = validation.validate('email', state.name)
+    const passwordTitle = validation.validate('password', state.name)
+    const passwordConfirmationTitle = validation.validate('passwordConfirmation', state.name)
+
     setState({
       ...state,
-      nameTitle: validation.validate('name', state.name),
-      emailTitle: validation.validate('email', state.name),
-      passwordTitle: validation.validate('password', state.name),
-      passwordConfirmationTitle: validation.validate('passwordConfirmation', state.name)
+      nameTitle,
+      emailTitle,
+      passwordTitle,
+      passwordConfirmationTitle,
+      isFormInvalid: !!nameTitle || !!emailTitle || !!passwordTitle || !!passwordConfirmationTitle
     })
   }, [state.name, state.email, state.password, state.passwordConfirmation])
 
@@ -48,13 +57,7 @@ const SignUp: React.FC<Props> = ({ validation, addAccount, saveAccessToken }: Pr
     e.preventDefault()
 
     try {
-      if (
-        state.isLoading ||
-        state.nameTitle ||
-        state.emailTitle ||
-        state.passwordTitle ||
-        state.passwordConfirmationTitle
-      ) {
+      if (state.isLoading || state.isFormInvalid) {
         return
       }
 
@@ -98,20 +101,9 @@ const SignUp: React.FC<Props> = ({ validation, addAccount, saveAccessToken }: Pr
           <Input type="password" name="password" placeholder="Digite sua senha"/>
           <Input type="password" name="passwordConfirmation" placeholder="Repita sua senha"/>
 
-          <button
-            data-testid="submit"
-            disabled={
-              !!state.nameTitle ||
-            !!state.emailTitle ||
-            !!state.passwordTitle ||
-            !!state.passwordConfirmationTitle
-            }
-            type="submit"
-          >
-              Criar Conta
-          </button>
+          <SubmitButton text="Criar Conta" />
 
-          <Link to="/" className={Styles.link}>Voltar Para Login</Link>
+          <Link data-testid="login-link" replace to="/login" className={Styles.link}>Voltar Para Login</Link>
 
           <FormStatus />
         </form>
