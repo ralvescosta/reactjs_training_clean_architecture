@@ -10,14 +10,17 @@ import FormStatus from '~/presentation/components/formStatus'
 import Footer from '~/presentation/components/footer'
 import { Validation } from '~/presentation/protocols/validation'
 import { AddAccount } from '~/domain/usecases/addAccount'
-// import { Link } from 'react-router-dom'
+import { SaveAccessToken } from '~/domain/usecases/save.access.token'
+import { Link, useHistory } from 'react-router-dom'
 
 type Props = {
   validation: Validation
   addAccount: AddAccount
+  saveAccessToken: SaveAccessToken
 }
 
-const SignUp: React.FC<Props> = ({ validation, addAccount }: Props) => {
+const SignUp: React.FC<Props> = ({ validation, addAccount, saveAccessToken }: Props) => {
+  const history = useHistory()
   const [state, setState] = useState({
     name: '',
     email: '',
@@ -44,26 +47,38 @@ const SignUp: React.FC<Props> = ({ validation, addAccount }: Props) => {
   async function handleSubmit (e: React.FormEvent<HTMLFormElement>): Promise<void> {
     e.preventDefault()
 
-    if (
-      state.isLoading ||
-      state.nameTitle ||
-      state.emailTitle ||
-      state.passwordTitle ||
-      state.passwordConfirmationTitle
-    ) {
-      return
-    }
+    try {
+      if (
+        state.isLoading ||
+        state.nameTitle ||
+        state.emailTitle ||
+        state.passwordTitle ||
+        state.passwordConfirmationTitle
+      ) {
+        return
+      }
 
-    setState({
-      ...state,
-      isLoading: true
-    })
-    await addAccount.add({
-      name: state.name,
-      email: state.email,
-      password: state.password,
-      passwordConfirmation: state.passwordConfirmation
-    })
+      setState({
+        ...state,
+        isLoading: true
+      })
+
+      const account = await addAccount.add({
+        name: state.name,
+        email: state.email,
+        password: state.password,
+        passwordConfirmation: state.passwordConfirmation
+      })
+
+      await saveAccessToken.save(account.accessToken)
+      history.replace('/')
+    } catch (err) {
+      setState({
+        ...state,
+        isLoading: false,
+        messageToUser: err.message
+      })
+    }
   }
 
   return (
@@ -96,7 +111,7 @@ const SignUp: React.FC<Props> = ({ validation, addAccount }: Props) => {
               Criar Conta
           </button>
 
-          <a className={Styles.link}>Voltar Para Login</a>
+          <Link to="/" className={Styles.link}>Voltar Para Login</Link>
 
           <FormStatus />
         </form>
